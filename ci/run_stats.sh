@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# Make sure all permission are valid
-chmod -R a+rx ./ra_cli
-chmod a+rx ./ci/run_stats.sh
-chmod -R u+rw ./rustc-perf
-
 # ignore rustc-perf Cargo workspace
 if test -f ./rustc-perf/Cargo.toml; then
     mv ./rustc-perf/Cargo.toml ./rustc-perf/Cargo.toml.bk

@@ -38,7 +38,7 @@ jobs:
       - uses: actions/upload-artifact@v1
         with:
           name: ra_cli
-          path: ./target/release/ra_cli
+          path: ./ra_cli
   run_ra:
     name: Run ra_cli
     runs-on: ubuntu-latest
@@ -60,13 +60,18 @@ jobs:
           name: ra_cli
       - name: Run analysis-stats
         run: |
+          ls -R ./ra_cli
+          chmod -R a+rx ./ra_cli
+          chmod a+rx ./ci/run_stats.sh
+          chmod -R u+rw ./rustc-perf
           ./ci/run_stats.sh
       - name: Prepare gh-pages
         run: |
           mkdir gh-pages          
           cd gh-pages
           git clone https://github.com/${GITHUB_REPOSITORY} .
-          cp ../ra-stats-output.txt "./ra-stats-output-$(cat ../ra_cli/commit).txt"
+          mkdir -p data
+          cp ../ra-stats-output.txt "./data/ra-stats-output-$(cat ../ra_cli/commit).txt"
           git add .
           git commit -m "[Bot]Add output $(cat ../ra_cli/commit)"
       - name: Push changes
