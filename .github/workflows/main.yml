@@ -33,3 +33,17 @@ jobs:
         with:
           name: ra_cil
           path: ./target/release/ra_cli
+  run_ra:
+    runs-on: ubuntu-latest
+    needs: build_ra
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          submodules: true
+      - uses: actions/download-artifact@v1
+        with:
+          name: ra_cli
+      - name: Run analysis-stats
+        run: |      
+          sh ./ci/run_stats.sh
+
