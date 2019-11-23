@@ -69,7 +69,9 @@ jobs:
         run: |
           mkdir gh-pages          
           cd gh-pages
-          git clone https://github.com/${GITHUB_REPOSITORY} .
+          git clone --branch gh-pages https://github.com/${GITHUB_REPOSITORY} .
+          git config --local user.email "action@github.com"
+          git config --local user.name "Bot For Stats"
           mkdir -p data
           cp ../ra-stats-output.txt "./data/ra-stats-output-$(cat ../ra_cli/commit).txt"
           git add .
