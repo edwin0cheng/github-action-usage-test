@@ -64,7 +64,11 @@ jobs:
           chmod -R a+rx ./ra_cli
           chmod a+rx ./ci/run_stats.sh
           chmod -R u+rw ./rustc-perf
-          ./ci/run_stats.sh
+          ./ci/run_stats.sh      
+      - uses: actions/setup-python@v1
+        with:
+          python-version: '3.x' # Version range or exact version of a Python version to use, using semvers version range syntax.
+          architecture: 'x64'
       - name: Prepare gh-pages
         run: |
           mkdir gh-pages          
@@ -73,7 +77,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "Bot For Stats"
           mkdir -p data
-          cp ../ra-stats-output.txt "./data/ra-stats-output-$(cat ../ra_cli/commit).txt"
+          python ./ci/convert.py ../ra-stats-output.txt ./data/commits.json ./data
           git add .
           git commit -m "[Bot]Add output $(cat ../ra_cli/commit)"
       - name: Push changes

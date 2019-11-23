@@ -12,9 +12,6 @@ RA_CLI=./ra_cli/ra_cli
 # OUTPUT_FILE="output-$COMMIT.txt"
 OUTPUT_FILE="ra-stats-output.txt"
 
-echo $(cat ./ra_cli/commit)
-echo "============="
-
 WHITE_LIST=(
     'cargo'
     'clap-rs'
@@ -37,6 +34,8 @@ is_white_listed () {
 }
 
 run_stats () {
+    echo $(cat ./ra_cli/commit)
+
     # Assume ra_cli is in current dir
     local DIRS=`ls -d ./rustc-perf/collector/benchmarks/*/`
 
