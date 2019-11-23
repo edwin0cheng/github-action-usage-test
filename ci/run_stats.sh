@@ -5,6 +5,6 @@ DIRS=`ls -d ./rustc-perf/collector/benchmarks/*/`
 
 for D in $DIRS
 do
-    ra_cli analysis-stats $D
+    ./ra_cli analysis-stats $D
 done
 
