@@ -84,6 +84,7 @@ txt_file = open(sys.argv[1])
 commits_file = open(sys.argv[2])
 content = iter(txt_file.read().splitlines())
 commits = json.load(commits_file)
+commits_file.close()
 (commit, projects) = parser(content, commits)
 
 output_json = "{}.json".format(commit)
@@ -94,3 +95,5 @@ output_path = os.path.join(sys.argv[3], os.path.basename(output_json))
 
 open(output_path, "w").write(projects_json)
 open(sys.argv[2], "w").write(commits_json)
+
+print("done!")

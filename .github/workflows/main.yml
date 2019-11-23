@@ -78,8 +78,10 @@ jobs:
           git config --local user.name "Bot For Stats"
           mkdir -p data
           python ../ci/convert.py ../ra-stats-output.txt ./data/commits.json ./data
+          cat ./data/commits.json
+          cat ../ra_cli/commit
           git add .
-          git commit -m "[Bot]Add output $(cat ../ra_cli/commit)"
+          git commit -m "[Bot] Add output $(cat ../ra_cli/commit)"
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
