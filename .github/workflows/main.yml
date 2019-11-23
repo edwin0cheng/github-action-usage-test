@@ -62,10 +62,13 @@ jobs:
         run: |
           ./ci/run_stats.sh
       - name: Prepare gh-pages
+        run: |
           mkdir gh-pages          
           cd gh-pages
           git clone https://github.com/${GITHUB_REPOSITORY} .
           cp ../ra-stats-output.txt "./ra-stats-output-$(cat ../ra_cli/commit).txt"
+          git add .
+          git commit -m "[Bot]Add output $(cat ../ra_cli/commit)"
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
