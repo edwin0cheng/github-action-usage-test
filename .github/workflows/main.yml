@@ -25,6 +25,12 @@ jobs:
         with:
           path: target
           key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
+      - name: Generate artifact
+        id: artifcat
+        run: |
+          mkdir ra_cli
+          cp ./target/release/ra_cli ./ra_cli/ra_cli
+          echo $(git rev-parse --short HEAD) > ./ra_cli/commit
       - uses: actions-rs/cargo@v1
         with:
           command: build
@@ -53,10 +59,16 @@ jobs:
         with:
           name: ra_cli
       - name: Run analysis-stats
-        run: |      
-          chmod -R a+rx ./ra_cli
-          chmod a+rx ./ci/run_stats.sh
-          chmod -R u+rw ./rustc-perf
-          mv ./rustc-perf/Cargo.toml ./rustc-perf/Cargo.toml.bk
+        run: |
           ./ci/run_stats.sh
-
+      - name: Prepare gh-pages
+          mkdir gh-pages          
+          cd gh-pages
+          git clone https://github.com/${GITHUB_REPOSITORY} .
+          cp ../ra-stats-output.txt "./ra-stats-output-$(cat ../ra_cli/commit).txt"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
+          directory: gh-pages
