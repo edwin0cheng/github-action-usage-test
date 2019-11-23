@@ -77,7 +77,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "Bot For Stats"
           mkdir -p data
-          python ./ci/convert.py ../ra-stats-output.txt ./data/commits.json ./data
+          python ../ci/convert.py ../ra-stats-output.txt ./data/commits.json ./data
           git add .
           git commit -m "[Bot]Add output $(cat ../ra_cli/commit)"
       - name: Push changes
