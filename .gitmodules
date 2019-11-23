@@ -1,0 +1,3 @@
+[submodule "rustc-perf"]
+	path = rustc-perf
+	url = https://github.com/rust-lang-nursery/rustc-perf.git

@@ -4,15 +4,21 @@ on:
       - master
 
 jobs:
-  hello_world_job:
+  build_ra:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    name: Build RA anal
     steps:
-    - name: Hello world action step
-      id: hello
-      uses: edwin0cheng/github-action-test@master
+    - name: Checkout RA      
+      run: |
+        cd $GITHUB_WORKSPACE
+        git clone https://github.com/rust-analyzer/rust-analyzer.git .
+    - uses: actions-rs/cargo@v1
       with:
-        who-to-greet: 'Mona the Octocat'
-    # Use the output from the `hello` step
-    - name: Get the output time
-      run: echo "The time was ${{ steps.hello.outputs.time }}"
+        command: build
+        args: --release -p ra_cli
+    - uses: actions/upload-artifact@v1
+      with:
+        name: ra_cil
+        path: $GITHUB_WORKSPACE/build/release/ra_cli
+
+
