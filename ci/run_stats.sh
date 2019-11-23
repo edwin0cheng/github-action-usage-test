@@ -6,5 +6,6 @@ chmod a+rx ./ra_cli
 
 for D in $DIRS
 do
+    echo "run analysis-stats on $D"
     ./ra_cli analysis-stats $D
 done
