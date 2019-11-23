@@ -69,8 +69,10 @@ def parse_stat(content):
 def parser(content, last_commits):
     projects = []
     commit = get_next(content)
-    if not commit in last_commits["commits"]:
-        last_commits["commits"].append(commit)
+    commit_time = get_next(content)
+    all_commits = last_commits["commits"]
+    if not commit in all_commits:
+        all_commits[commit] = commit_time
     while True:
         curr = parse_stat(content)
         if curr == None:

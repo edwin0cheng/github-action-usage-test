@@ -35,6 +35,7 @@ is_white_listed () {
 
 run_stats () {
     echo $(cat ./ra_cli/commit)
+    echo $(cat ./ra_cli/commit_time)
 
     # Assume ra_cli is in current dir
     local DIRS=`ls -d ./rustc-perf/collector/benchmarks/*/`

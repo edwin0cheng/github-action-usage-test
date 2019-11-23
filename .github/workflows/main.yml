@@ -31,6 +31,7 @@ jobs:
           mkdir ra_cli
           cp ./target/release/ra_cli ./ra_cli/ra_cli
           echo $(git rev-parse --short HEAD) > ./ra_cli/commit
+          echo $(git show --no-patch --no-notes --pretty=%ct HEAD) > ./ra_cli/commit_time
       - uses: actions-rs/cargo@v1
         with:
           command: build
