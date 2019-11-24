@@ -41,31 +41,23 @@ def do_exists(arg):
         print("Target not exists in commits.json")
         return True
 
-if len(sys.argv) < 3:
-    print("Not valid command line args")
-    exit(-1)
-
 def fail_return(msg):
-    if len(sys.argv) > 3:
-        with open(sys.argv[3], 'w') as file:
-            file.write(msg)
-    else:
-        exit(-1)
+    with open(sys.argv[3], 'w') as file:
+        file.write(msg)
 
-mode = sys.argv[1]
+if len(sys.argv) == 4:
+    print("Not valid command line args")
+    exit(0)
 
 # Check if error.txt exists and not empty
-if len(sys.argv) > 3:
-    try:
-        with open(sys.argv[3], 'r') as file:
-            if file.read() != "":
-                exit(-1)
-    except:
-        pass
+with open(sys.argv[3], 'r') as file:
+    if file.read() != "":
+        exit(0)
 
+mode = sys.argv[1]
 if mode == "check":
     if not do_check(sys.argv[2]):
-        fail_return("Your request is not valid.")
+        fail_return("NO_MSG")
 elif mode == "exists":
     if not do_exists(sys.argv[2]):
         fail_return("Your request is already in the page.")
@@ -74,4 +66,4 @@ elif mode == "valid":
         fail_return("Your request is not a RA Commit.")
 else:
     print("No this command")
-    exit(-1)
+    exit(0)

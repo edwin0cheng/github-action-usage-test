@@ -15,53 +15,43 @@ jobs:
         with:
           ref: master
       - name: Check Contains raa+
-        run: python ci/issue.py check ${{ github.event.issue_comment.body }}
-  check_full_valid:
-    name: Check Issue Comment Sha  
-    runs-on: ubuntu-latest
-    needs: check_basic_valid
-    steps:      
-      - uses: actions/setup-python@v1
-        with:
-          python-version: "^3.5.0" # Version range or exact version of a Python version to use, using semvers version range syntax.
-          architecture: "x64"
-      - uses: actions/checkout@v1
-        with:
-          ref: master
-      - name: Check Contains raa+
-        run: python ci/issue.py check ${{ github.event.issue_comment.body }} error.txt
+        id: contain_ra
+        run: |
+          touch error.txt
+          python ci/issue.py check ${{ github.event.issue_comment.body }} error.txt
+          echo ::set-output name=msg::$(cat error.txt)
       - name: Checkout gh-pages
+        if: steps.contain_ra.msg == ''
         run: |
           mkdir gh-pages
           cd gh-pages
           git clone --branch gh-pages https://github.com/${GITHUB_REPOSITORY} .
-      - name: Check if already exists
+      - name: More Check
+        if: steps.contain_ra.msg == ''
+        id: more_check
         run: |
           cd gh-pages
           python ../ci/issue.py exists $(cat ../target_sha.txt) error.txt
-      - name: Check if a valid sha in RA
-        run: |
+          echo ::set-output name=msg::$(cat error.txt)
           mkdir rust-analyzer
           cd rust-analyzer
           git clone https://github.com/rust-analyzer/rust-analyzer.git .
           python ../ci/issue.py valid $(cat ../target_sha.txt) error.txt
-      - name: Read error
-        if: failure()
-        id: read_error
-        run: |
-          echo ::set-output name=msg::$(cat error.txt)
+          echo ::set-output name=msg::$(cat ../error.txt)
       - name: Tell failure story
-        if: failure()
+        if: steps.more_check.msg != 'NO_MSG' && steps.more_check.msg != ''
         uses: actions/github-script@0.3.0
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             github.issues.createComment({...context.issue, body: '👀 {{steps.read_result.outputs.msg}}'})
       - name: Send Deployment
+        if: steps.more_check.msg == ''
         run: |
           chmod a+rx ./ci/send_deployment.sh
           ./ci/send_deployment.sh          
       - uses: actions/github-script@0.3.0
+        if: steps.more_check.msg == ''
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
