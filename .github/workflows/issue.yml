@@ -1,7 +1,7 @@
 on: ["issue_comment"]
 
 jobs:
-  check_sha_valid:
+  check_basic_valid:
     name: Check Issue Comment Sha  
     runs-on: ubuntu-latest
     steps:
@@ -16,6 +16,20 @@ jobs:
           ref: master
       - name: Check Contains raa+
         run: python ci/issue.py check ${{ github.event.issue_comment.body }}
+  check_full_valid:
+    name: Check Issue Comment Sha  
+    runs-on: ubuntu-latest
+    needs: check_basic_valid
+    steps:      
+      - uses: actions/setup-python@v1
+        with:
+          python-version: "^3.5.0" # Version range or exact version of a Python version to use, using semvers version range syntax.
+          architecture: "x64"
+      - uses: actions/checkout@v1
+        with:
+          ref: master
+      - name: Check Contains raa+
+        run: python ci/issue.py check ${{ github.event.issue_comment.body }} error.txt
       - name: Checkout gh-pages
         run: |
           mkdir gh-pages
@@ -24,27 +38,25 @@ jobs:
       - name: Check if already exists
         run: |
           cd gh-pages
-          python ../ci/issue.py exists $(cat ../target_sha.txt)
-      - name: Tell user it already exists
-        if: failure()
-        uses: actions/github-script@0.3.0
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            github.issues.createComment({...context.issue, body: '👀 Your request sha already in page!'})
+          python ../ci/issue.py exists $(cat ../target_sha.txt) error.txt
       - name: Check if a valid sha in RA
         run: |
           mkdir rust-analyzer
           cd rust-analyzer
           git clone https://github.com/rust-analyzer/rust-analyzer.git .
-          python ../ci/issue.py valid $(cat ../target_sha.txt)
-      - name: Tell user it is not a commit
+          python ../ci/issue.py valid $(cat ../target_sha.txt) error.txt
+      - name: Read error
+        if: failure()
+        id: read_error
+        run: |
+          echo ::set-output name=msg::$(cat error.txt)
+      - name: Tell failure story
         if: failure()
         uses: actions/github-script@0.3.0
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            github.issues.createComment({...context.issue, body: '👀 Your request sha is not valid in RA!'})
+            github.issues.createComment({...context.issue, body: '👀 {{steps.read_result.outputs.msg}}'})
       - name: Send Deployment
         run: |
           chmod a+rx ./ci/send_deployment.sh
@@ -53,7 +65,7 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            github.issues.createComment({...context.issue, body: '🤖 Your request is in queue!'})
+            github.issues.createComment({...context.issue, body: '🤖 Your request is queued, Thanks!'})
 
 
           
