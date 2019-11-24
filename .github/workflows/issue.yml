@@ -52,7 +52,7 @@ jobs:
       - name: Send Deployment
         if: steps.read_error.outputs.msg == ''
         env: 
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TOKEN: ${{ secrets.ISSUE_TOKEN }}
         run: |
           chmod a+rx ./ci/send_deployment.sh
           ./ci/send_deployment.sh
