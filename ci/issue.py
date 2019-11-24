@@ -45,7 +45,7 @@ def fail_return(msg):
     with open(sys.argv[3], 'w') as file:
         file.write(msg)
 
-if len(sys.argv) == 4:
+if len(sys.argv) != 4:
     print("Not valid command line args")
     exit(0)
 
