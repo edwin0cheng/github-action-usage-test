@@ -92,3 +92,9 @@ jobs:
         with:
           state: "failure"
           token: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Request Rebuild Page
+        env:
+          TOKEN: ${{ secrets.ISSUE_TOKEN }}
+        run: |
+          chmod a+rx ./ci/rebuild_page.sh
+          ./ci/rebuild_page.sh
