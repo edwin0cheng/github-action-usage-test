@@ -46,7 +46,9 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            github.issues.createComment({...context.issue, body: '👀 {{steps.read_error.outputs.msg}}'})
+            const fs = require("fs")
+            const msg = fs.readFileSync("./error.txt", "utf8")
+            github.issues.createComment({...context.issue, body: '👀 ' + msg})
       - name: Send Deployment
         if: steps.read_error.outputs.msg == ''
         run: |
