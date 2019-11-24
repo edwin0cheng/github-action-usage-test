@@ -28,7 +28,6 @@ jobs:
           git clone --branch gh-pages https://github.com/${GITHUB_REPOSITORY} .
       - name: More Check
         if: steps.contain_ra.outputs.msg == ''
-        id: more_check
         run: |
           cd gh-pages
           python ../ci/issue.py exists $(cat ../target_sha.txt) error.txt
@@ -37,6 +36,9 @@ jobs:
           cd rust-analyzer
           git clone https://github.com/rust-analyzer/rust-analyzer.git .
           python ../ci/issue.py valid $(cat ../target_sha.txt) error.txt
+      - name: Read Error
+        id: more_check
+        run: |
           echo ::set-output name=msg::$(cat ../error.txt)
       - name: Tell failure story
         if: steps.more_check.outputs.msg != 'NO_MSG' && steps.more_check.outputs.msg != ''
