@@ -1,13 +1,18 @@
-on:
-  push:
-    branches:
-      - master
+on: ["deployment"]
 
 jobs:
   build_ra:
     runs-on: ubuntu-latest
     name: Build RA and Run Stats
     steps:
+      - name: Show Request sha
+        run: echo ${{ github.event.deployment.payload.sha }}"
+      - name: 'Deployment pending'
+        uses: 'deliverybot/status@master'
+        with:
+          state: 'pending'
+          token: '${{ secrets.GITHUB_TOKEN }}'
+      
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
         with:
@@ -26,6 +31,7 @@ jobs:
           mkdir rust-analyzer
           cd rust-analyzer
           git clone https://github.com/rust-analyzer/rust-analyzer.git .
+          git checkout ${{ github.event.deployment.payload.sha }}"
 
       - name: Cargo target cache
         uses: actions/cache@v1
@@ -42,19 +48,19 @@ jobs:
         run: |
           cd rust-analyzer
           cargo build --release -p ra_cli
-          cp ./target/release/ra_cli ../ra_cli/ra_cli            
+          cp ./target/release/ra_cli ../ra_cli/ra_cli
       - name: Run analysis-stats
         run: |
           ls -R ./ra_cli
           chmod -R a+rx ./ra_cli
           chmod a+rx ./ci/run_stats.sh
           chmod -R u+rw ./rustc-perf
-          ./ci/run_stats.sh      
+          ./ci/run_stats.sh
       - uses: actions/setup-python@v1
         with:
-          python-version: '3.x' # Version range or exact version of a Python version to use, using semvers version range syntax.
-          architecture: 'x64'
-      
+          python-version: "3.x" # Version range or exact version of a Python version to use, using semvers version range syntax.
+          architecture: "x64"
+
       - name: Prepare gh-pages
         run: |
           mkdir gh-pages          
@@ -74,3 +80,15 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           directory: gh-pages
+      - name: "deployment success"
+        if: success()
+        uses: "deliverybot/status@master"
+        with:
+          state: "success"
+          token: "${{ secrets.GITHUB_TOKEN }}"
+      - name: "deployment failure"
+        if: failure()
+        uses: "deliverybot/status@master"
+        with:
+          state: "failure"
+          token: "${{ secrets.GITHUB_TOKEN }}"
