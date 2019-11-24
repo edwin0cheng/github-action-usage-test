@@ -39,7 +39,7 @@ jobs:
       - name: Read Error
         id: more_check
         run: |
-          echo ::set-output name=msg::$(cat ../error.txt)
+          echo ::set-output name=msg::$(cat error.txt)
       - name: Tell failure story
         if: steps.more_check.outputs.msg != 'NO_MSG' && steps.more_check.outputs.msg != ''
         uses: actions/github-script@0.3.0
@@ -51,7 +51,7 @@ jobs:
         if: steps.more_check.outputs.msg == ''
         run: |
           chmod a+rx ./ci/send_deployment.sh
-          ./ci/send_deployment.sh          
+          ./ci/send_deployment.sh
       - uses: actions/github-script@0.3.0
         if: steps.more_check.outputs.msg == ''
         with:
