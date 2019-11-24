@@ -21,13 +21,13 @@ jobs:
           python ci/issue.py check "${{ github.event.comment.body }}" error.txt
           echo ::set-output name=msg::$(cat error.txt)
       - name: Checkout gh-pages
-        if: steps.contain_ra.msg == ''
+        if: steps.contain_ra.outputs.msg == ''
         run: |
           mkdir gh-pages
           cd gh-pages
           git clone --branch gh-pages https://github.com/${GITHUB_REPOSITORY} .
       - name: More Check
-        if: steps.contain_ra.msg == ''
+        if: steps.contain_ra.outputs.msg == ''
         id: more_check
         run: |
           cd gh-pages
@@ -39,19 +39,19 @@ jobs:
           python ../ci/issue.py valid $(cat ../target_sha.txt) error.txt
           echo ::set-output name=msg::$(cat ../error.txt)
       - name: Tell failure story
-        if: steps.more_check.msg != 'NO_MSG' && steps.more_check.msg != ''
+        if: steps.more_check.outputs.msg != 'NO_MSG' && steps.more_check.outputs.msg != ''
         uses: actions/github-script@0.3.0
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             github.issues.createComment({...context.issue, body: '👀 {{steps.read_result.outputs.msg}}'})
       - name: Send Deployment
-        if: steps.more_check.msg == ''
+        if: steps.more_check.outputs.msg == ''
         run: |
           chmod a+rx ./ci/send_deployment.sh
           ./ci/send_deployment.sh          
       - uses: actions/github-script@0.3.0
-        if: steps.more_check.msg == ''
+        if: steps.more_check.outputs.msg == ''
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
