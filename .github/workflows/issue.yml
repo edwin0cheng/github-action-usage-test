@@ -37,23 +37,23 @@ jobs:
           git clone https://github.com/rust-analyzer/rust-analyzer.git .
           python ../ci/issue.py valid $(cat ../target_sha.txt) ../error.txt
       - name: Read Error
-        id: more_check
+        id: read_error
         run: |
           echo ::set-output name=msg::$(cat error.txt)
       - name: Tell failure story
-        if: steps.more_check.outputs.msg != 'NO_MSG' && steps.more_check.outputs.msg != ''
+        if: steps.read_error.outputs.msg != 'NO_MSG' && steps.read_error.outputs.msg != ''
         uses: actions/github-script@0.3.0
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            github.issues.createComment({...context.issue, body: '👀 {{steps.read_result.outputs.msg}}'})
+            github.issues.createComment({...context.issue, body: '👀 {{steps.read_error.outputs.msg}}'})
       - name: Send Deployment
-        if: steps.more_check.outputs.msg == ''
+        if: steps.read_error.outputs.msg == ''
         run: |
           chmod a+rx ./ci/send_deployment.sh
           ./ci/send_deployment.sh
       - uses: actions/github-script@0.3.0
-        if: steps.more_check.outputs.msg == ''
+        if: steps.read_error.outputs.msg == ''
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
