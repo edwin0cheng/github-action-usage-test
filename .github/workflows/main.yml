@@ -114,7 +114,7 @@ jobs:
             const process = require("process")
             const payload_json = JSON.parse(process.env.PAYLOAD)
             if(payload_json.issue && payload_json.reply_to){
-              const issue_object = playload_json.issue
+              const issue_object = payload_json.issue
               const reply_to = payload_json.reply_to
               const sha = payload_json.sha
               const url = process.env.HOMEPAGE + '#' + sha
