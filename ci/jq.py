@@ -1,11 +1,10 @@
 import sys
+import os
 import json
 
 # simple json tool
-
-json_str = sys.argv[1]
-key = sys.argv[2]
-o = json.loads(json_str)
+key = sys.argv[1]
+o = json.loads(os.environ["JSON"])
 if key in o:
     print(o[key],end='')
 else:

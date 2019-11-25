@@ -34,11 +34,13 @@ jobs:
           ref: refs/heads/master
 
       - name: Checkout RA
+        env:
+          JSON: ${{ github.event.deployment.payload }}
         run: |
           mkdir rust-analyzer
           cd rust-analyzer
           git clone https://github.com/rust-analyzer/rust-analyzer.git .
-          git checkout $(python ../ci/jq.py "${{ github.event.deployment.payload }}" sha)
+          git checkout $(python ../ci/jq.py sha)
 
       - name: Cargo target cache
         uses: actions/cache@v1
