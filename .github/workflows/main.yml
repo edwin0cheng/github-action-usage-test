@@ -101,20 +101,16 @@ jobs:
         run: |
           chmod a+rx ./ci/rebuild_page.sh
           ./ci/rebuild_page.sh
-      - name: Check if issue
-        id: check_issue
+      - uses: actions/github-script@0.3.0
         env:
           PAYLOAD: ${{ github.event.deployment.payload }}
-        run: |
-          echo $(python ./ci/jq.py "$PAYLOAD" issue)
-          python ./ci/jq.py "$PAYLOAD" issue > issue.txt
-          echo ::set-output name=issue::$(python ./ci/jq.py "$PAYLOAD" issue)
-      - uses: actions/github-script@0.3.0
-        if: steps.check_issue.outputs.issue != ''
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const fs = require("fs")
-            const issue_json = fs.readFileSync("./issue.txt", "utf8")
-            const issue_object = JSON.parse(issue_json)
-            github.issues.createComment({...issue_object, body: '🤖 Your request commit is posted!'})
+            const process = require("process")
+            const playload_json = JSON.parse(process.env.PAYLOAD)
+            if(playload_json.issue){
+              const issue_object = playload_json.issue
+              github.issues.createComment({...issue_object, body: '🤖 Your request commit is posted!'})
+            }
+            
