@@ -30,9 +30,7 @@ def do_valid(arg_file):
     with open(arg_file, 'r') as file:
         arg = file.read().strip()
     result = subprocess.run(['git', 'cat-file', '-t', arg], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    if result.stdout.decode('utf-8').strip() == "commit":
-        return True
-    else:
+    if result.stdout.decode('utf-8').strip() != "commit":
         print("No this commit")
         return False
     # normalize the sha to len => 8
@@ -43,9 +41,10 @@ def do_valid(arg_file):
     except ValueError:
         print("Not valid sha format")
         return False
+    print(result[0:8])
     arg = result[0:8]
     open(arg_file, "w").write(arg)
-    return True    
+    return True
 
 def do_exists(arg_file):
     arg = ""
