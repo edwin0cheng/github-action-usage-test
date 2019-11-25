@@ -5,9 +5,9 @@ import subprocess
 
 print(os.environ['GITHUB_REPOSITORY'])
 
-url = format("https://api.github.com/repos/{}/deployments", os.environ['GITHUB_REPOSITORY'])
+url = "https://api.github.com/repos/{}/deployments".format(os.environ['GITHUB_REPOSITORY'])
 sha = open("target_sha.txt", "r").read().strip()
-issue = json.load("issue.json")
+issue = json.load(open("issue.json", "r"))
 payload = dict()
 payload["sha"] = sha
 payload["issue"] = issue
