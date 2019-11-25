@@ -64,8 +64,7 @@ jobs:
         env: 
           TOKEN: ${{ secrets.ISSUE_TOKEN }}
         run: |
-          chmod a+rx ./ci/send_deployment.sh
-          ./ci/send_deployment.sh
+          python ./ci/send_deployment.py
 
 
           
