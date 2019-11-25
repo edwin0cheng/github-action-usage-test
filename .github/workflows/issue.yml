@@ -51,6 +51,14 @@ jobs:
             const fs = require("fs")
             const msg = fs.readFileSync("./error.txt", "utf8")
             github.issues.createComment({...context.issue, body: '👀 ' + msg})
+      - uses: actions/github-script@0.3.0
+        if: steps.read_error.outputs.msg == ''
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const fs = require("fs")
+            fs.writeFileSync("./issue.json", JSON.stringify(context.issue))
+            github.issues.createComment({...context.issue, body: '🤖 Your request is queued, Thanks!'})
       - name: Send Deployment
         if: steps.read_error.outputs.msg == ''
         env: 
@@ -58,12 +66,6 @@ jobs:
         run: |
           chmod a+rx ./ci/send_deployment.sh
           ./ci/send_deployment.sh
-      - uses: actions/github-script@0.3.0
-        if: steps.read_error.outputs.msg == ''
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            github.issues.createComment({...context.issue, body: '🤖 Your request is queued, Thanks!'})
 
 
           
