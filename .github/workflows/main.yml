@@ -103,10 +103,12 @@ jobs:
           ./ci/rebuild_page.sh
       - name: Check if issue
         id: check_issue
+        env:
+          PAYLOAD: ${{ github.event.deployment.payload }}
         run:
-          echo $(python ./ci/jq.py ${{ github.event.deployment.payload }} issue)
-          python ./ci/jq.py ${{ github.event.deployment.payload }} issue > issue.txt
-          echo ::set-output name=issue::$(python ./ci/jq.py ${{ github.event.deployment.payload }} issue)
+          echo $(python ./ci/jq.py "$PAYLOAD" issue)
+          python ./ci/jq.py "$PAYLOAD" issue > issue.txt
+          echo ::set-output name=issue::$(python ./ci/jq.py "$PAYLOAD" issue)
       - uses: actions/github-script@0.3.0
         if: steps.check_issue.outputs.issue != ''
         with:
