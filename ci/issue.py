@@ -10,11 +10,12 @@ def do_check(arg):
         print("Normal comment, skip")
         return False
     arg = arg[pos:]
-    ref_len = len("raa+ a1d631da")
-    if len(arg) < ref_len:
+
+    args = arg.split()
+    if len(args) < 2:
         print("Invalid format")
-        return False
-    arg = arg[len("raa+ "):ref_len]
+        return False        
+    arg = args[1]
     try:
         int(arg, 16)
     except ValueError:
@@ -31,6 +32,17 @@ def do_valid(arg):
     else:
         print("No this commit")
         return False
+    # normalize the sha to len => 8
+    result = subprocess.run(['git', 'rev-parse', arg], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    result = result.stdout.decode('utf-8').strip()
+    try:
+        int(result, 16)
+    except ValueError:
+        print("Not valid sha format")
+        return False
+    arg = result[0:8]
+    open('target_sha.txt', "w").write(arg)
+    return True    
 
 def do_exists(arg):
     j = json.load(open("./data/commits.json", "r"))
