@@ -1,5 +1,8 @@
 on: ["deployment"]
 
+env:
+  HOMEPAGE: https://edwin0cheng.github.io/github-action-usage-test/
+
 jobs:
   build_ra:
     runs-on: ubuntu-latest
@@ -109,9 +112,12 @@ jobs:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const process = require("process")
-            const playload_json = JSON.parse(process.env.PAYLOAD)
-            if(playload_json.issue){
+            const payload_json = JSON.parse(process.env.PAYLOAD)
+            if(payload_json.issue && payload_json.reply_to){
               const issue_object = playload_json.issue
-              github.issues.createComment({...issue_object, body: '🤖 Your request commit is posted!'})
+              const reply_to = payload_json.reply_to
+              const sha = payload_json.sha
+              const url = process.env.HOMEPAGE + '#' + sha
+              github.issues.createComment({...issue_object, body: '🤖 '+'@'+reply_to+' Your request commit is posted! (' + url + ')'})
             }
             

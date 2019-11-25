@@ -78,7 +78,12 @@ if mode == "check":
         fail_return("NO_MSG")
 elif mode == "exists":
     if not do_exists(sys.argv[2]):
-        fail_return("Your request is already in the page.")
+        sha = ""
+        with open(sys.argv[2], 'r') as file:
+            sha = file.read().strip()
+        url = os.environ["HOMEPAGE"] + "#" + sha
+        reply = "Your request is already in the page. ({})".format(url)
+        fail_return(reply)
 elif mode == "valid":
     if not do_valid(sys.argv[2]):
         fail_return("Your request is not a RA Commit.")

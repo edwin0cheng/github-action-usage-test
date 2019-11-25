@@ -2,6 +2,9 @@ on:
   issue_comment:
     types: [created]
 
+env:
+  HOMEPAGE: https://edwin0cheng.github.io/github-action-usage-test/
+
 jobs:
   check_basic_valid:
     name: Check Issue Comment Sha  
@@ -45,24 +48,33 @@ jobs:
       - name: Tell failure story
         if: steps.read_error.outputs.msg != 'NO_MSG' && steps.read_error.outputs.msg != ''
         uses: actions/github-script@0.3.0
+        env: 
+          REPLY_TO: ${{ github.event.comment.user.login }}
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const fs = require("fs")
             const msg = fs.readFileSync("./error.txt", "utf8")
-            github.issues.createComment({...context.issue, body: '👀 ' + msg})
+            const process = require("process")
+            const reply_to = process.env.REPLY_TO
+            github.issues.createComment({...context.issue, body: '👀 ' + '@' + reply_to + ' ' + msg})
       - uses: actions/github-script@0.3.0
         if: steps.read_error.outputs.msg == ''
+        env: 
+          REPLY_TO: ${{ github.event.comment.user.login }}
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const fs = require("fs")
             fs.writeFileSync("./issue.json", JSON.stringify(context.issue))
-            github.issues.createComment({...context.issue, body: '🤖 Your request is queued, Thanks!'})
+            const process = require("process")
+            const reply_to = process.env.REPLY_TO
+            github.issues.createComment({...context.issue, body: '🤖 ' + '@' + reply_to + ' Your request is queued, Thanks!'})
       - name: Send Deployment
         if: steps.read_error.outputs.msg == ''
         env: 
           TOKEN: ${{ secrets.ISSUE_TOKEN }}
+          REPLY_TO: ${{ github.event.comment.user.login }}
         run: |
           python ./ci/send_deployment.py
 

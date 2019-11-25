@@ -4,12 +4,14 @@ import json
 import subprocess
 
 print(os.environ['GITHUB_REPOSITORY'])
+print(os.environ['REPLY_TO'])
 
 url = "https://api.github.com/repos/{}/deployments".format(os.environ['GITHUB_REPOSITORY'])
 sha = open("target_sha.txt", "r").read().strip()
 issue = json.load(open("issue.json", "r"))
 payload = dict()
 payload["sha"] = sha
+payload["reply_to"] = os.environ['REPLY_TO']
 payload["issue"] = issue
 
 payload_str = json.dumps(payload)
