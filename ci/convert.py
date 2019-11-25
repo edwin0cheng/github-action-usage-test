@@ -35,33 +35,40 @@ def parse_stat(content):
     stat = dict()
     stat["project_name"] = name
     assert(get_next(content).startswith("====START"))
-    m = re.search(
-        r"Database loaded, (\d+) roots, ([+-]?([0-9]*[.])?[0-9]+[m]?s)", get_next(content))
-    stat["roots"] = int(m.group(1))
-    stat["database_loaded_time"] = m.group(2)
-    stat["crates"] = int(
-        re.search(r"Crates in this dir: (.*)", get_next(content)).group(1))
-    stat["modules"] = int(
-        re.search(r"Total modules found: (.*)", get_next(content)).group(1))
-    stat["declarations"] = int(
-        re.search(r"Total declarations: (.*)", get_next(content)).group(1))
-    stat["functions"] = int(
-        re.search(r"Total functions: (.*)", get_next(content)).group(1))
-    stat["item_collection_time"] = re.search(
-        r"Item Collection: ([+-]?([0-9]*[.])?[0-9]+[m]?s)(.*)", get_next(content)).group(1)
-    stat["expressions"] = int(
-        re.search(r"Total expressions: (.*)", get_next(content)).group(1))
-    stat["unknown_types"] = int(re.search(
-        r"Expressions of unknown type: (\d+) (.*)", get_next(content)).group(1))
-    stat["partial_unknown_types"] = int(re.search(
-        r"Expressions of partially unknown type: (\d+) (.*)", get_next(content)).group(1))
-    stat["type_mismatches"] = int(
-        re.search(r"Type mismatches: (.*)", get_next(content)).group(1))
-    stat["inferenece_time"] = re.search(
-        r"Inference: ([+-]?([0-9]*[.])?[0-9]+[m]?s), (.*)", get_next(content)).group(1)
-    stat["total_time"] = re.search(
-        r"Total: ([+-]?([0-9]*[.])?[0-9]+[m]?s), (.*)", get_next(content)).group(1)
-    assert(get_next(content).startswith("====END"))
+    try: 
+        m = re.search(
+            r"Database loaded, (\d+) roots, ([+-]?([0-9]*[.])?[0-9]+[m]?s)", get_next(content))
+        stat["roots"] = int(m.group(1))
+        stat["database_loaded_time"] = m.group(2)
+        stat["crates"] = int(
+            re.search(r"Crates in this dir: (.*)", get_next(content)).group(1))
+        stat["modules"] = int(
+            re.search(r"Total modules found: (.*)", get_next(content)).group(1))
+        stat["declarations"] = int(
+            re.search(r"Total declarations: (.*)", get_next(content)).group(1))
+        stat["functions"] = int(
+            re.search(r"Total functions: (.*)", get_next(content)).group(1))
+        stat["item_collection_time"] = re.search(
+            r"Item Collection: ([+-]?([0-9]*[.])?[0-9]+[m]?s)(.*)", get_next(content)).group(1)
+        stat["expressions"] = int(
+            re.search(r"Total expressions: (.*)", get_next(content)).group(1))
+        stat["unknown_types"] = int(re.search(
+            r"Expressions of unknown type: (\d+) (.*)", get_next(content)).group(1))
+        stat["partial_unknown_types"] = int(re.search(
+            r"Expressions of partially unknown type: (\d+) (.*)", get_next(content)).group(1))
+        stat["type_mismatches"] = int(
+            re.search(r"Type mismatches: (.*)", get_next(content)).group(1))
+        stat["inferenece_time"] = re.search(
+            r"Inference: ([+-]?([0-9]*[.])?[0-9]+[m]?s), (.*)", get_next(content)).group(1)
+        stat["total_time"] = re.search(
+            r"Total: ([+-]?([0-9]*[.])?[0-9]+[m]?s), (.*)", get_next(content)).group(1)    
+        assert(get_next(content).startswith("====END"))
+    except:
+        stat["error"] = "fail to parse output"
+        # skip to the end
+        while True:
+            if get_next(content).startswith("====END"):
+                break
 
     return stat
 
