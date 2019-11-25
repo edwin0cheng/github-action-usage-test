@@ -32,12 +32,12 @@ jobs:
         if: steps.contain_ra.outputs.msg == ''
         run: |
           cd gh-pages
-          python ../ci/issue.py exists $(cat ../target_sha.txt) ../error.txt
+          python ../ci/issue.py exists ../target_sha.txt ../error.txt
           cd ..
           mkdir rust-analyzer
           cd rust-analyzer
           git clone https://github.com/rust-analyzer/rust-analyzer.git .
-          python ../ci/issue.py valid $(cat ../target_sha.txt) ../error.txt
+          python ../ci/issue.py valid ../target_sha.txt ../error.txt
       - name: Read Error
         id: read_error
         run: |

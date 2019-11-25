@@ -25,7 +25,10 @@ def do_check(arg):
     open('target_sha.txt', "w").write(arg)
     return True
 
-def do_valid(arg):
+def do_valid(arg_file):
+    arg = ""
+    with open(arg_file, 'r') as file:
+        arg = file.read().strip()
     result = subprocess.run(['git', 'cat-file', '-t', arg], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     if result.stdout.decode('utf-8').strip() == "commit":
         return True
@@ -41,10 +44,14 @@ def do_valid(arg):
         print("Not valid sha format")
         return False
     arg = result[0:8]
-    open('target_sha.txt', "w").write(arg)
+    open(arg_file, "w").write(arg)
     return True    
 
-def do_exists(arg):
+def do_exists(arg_file):
+    arg = ""
+    with open(arg_file, 'r') as file:
+        arg = file.read().strip()
+
     j = json.load(open("./data/commits.json", "r"))
     if arg in j["commits"]:
         print("Target sha already exists in commits.json")
