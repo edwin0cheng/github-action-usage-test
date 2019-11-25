@@ -45,7 +45,7 @@ run_stats () {
         if [[ "$(is_white_listed $D)" == "True" ]]; then
             echo "run analysis-stats on $D"
             echo "====START===="
-            $RA_CLI analysis-stats -q $D
+            $RA_CLI analysis-stats -q $D 2>&1
             echo "====END===="
         fi
     done
