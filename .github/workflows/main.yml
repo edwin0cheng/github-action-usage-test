@@ -105,7 +105,7 @@ jobs:
         id: check_issue
         env:
           PAYLOAD: ${{ github.event.deployment.payload }}
-        run:
+        run: |
           echo $(python ./ci/jq.py "$PAYLOAD" issue)
           python ./ci/jq.py "$PAYLOAD" issue > issue.txt
           echo ::set-output name=issue::$(python ./ci/jq.py "$PAYLOAD" issue)
