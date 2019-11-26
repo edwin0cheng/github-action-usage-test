@@ -4,7 +4,7 @@ name:
 on: 
   schedule:
     # every 30 mins
-    - cron:  '*/15 * * * *'
+    - cron:  '*/30 * * * *'
 
 env:
   HOMEPAGE: https://edwin0cheng.github.io/github-action-usage-test/
