@@ -22,13 +22,11 @@ jobs:
         with:
           ref: master
       - name: Checkout gh-pages
-        if: steps.contain_ra.outputs.msg == ''
         run: |
           mkdir gh-pages
           cd gh-pages
           git clone --branch gh-pages https://github.com/${GITHUB_REPOSITORY} .
       - name: More Check
-        if: steps.contain_ra.outputs.msg == ''
         run: |
           touch error.txt
           mkdir rust-analyzer
