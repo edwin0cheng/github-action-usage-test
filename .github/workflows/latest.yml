@@ -1,0 +1,50 @@
+name:
+  Check latest RA
+
+on: 
+  schedule:
+    # every 30 mins
+    - cron:  '*/15 * * * *'
+
+env:
+  HOMEPAGE: https://edwin0cheng.github.io/github-action-usage-test/
+
+jobs:
+  check_basic_valid:
+    name: Check Issue Comment Sha  
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          ref: master
+      - name: Checkout gh-pages
+        if: steps.contain_ra.outputs.msg == ''
+        run: |
+          mkdir gh-pages
+          cd gh-pages
+          git clone --branch gh-pages https://github.com/${GITHUB_REPOSITORY} .
+      - name: More Check
+        if: steps.contain_ra.outputs.msg == ''
+        run: |
+          touch error.txt
+          mkdir rust-analyzer
+          cd rust-analyzer
+          git clone https://github.com/rust-analyzer/rust-analyzer.git .
+          echo $(git rev-parse --short HEAD) > ../target_sha.txt
+          python ../ci/issue.py valid ../target_sha.txt ../error.txt
+          cd ../gh-pages
+          python ../ci/issue.py exists ../target_sha.txt ../error.txt
+
+      - name: Read Error
+        id: read_error
+        run: |
+          echo ::set-output name=msg::$(cat error.txt)
+      - name: Send Deployment
+        if: steps.read_error.outputs.msg == ''
+        env: 
+          TOKEN: ${{ secrets.ISSUE_TOKEN }}
+        run: |
+          python ./ci/send_deployment.py
+
+
+          
