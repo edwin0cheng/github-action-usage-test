@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.js": "/github-action-usage-test/static/js/main.204be008.chunk.js",
-    "main.js.map": "/github-action-usage-test/static/js/main.204be008.chunk.js.map",
+    "main.js": "/github-action-usage-test/static/js/main.c0afd546.chunk.js",
+    "main.js.map": "/github-action-usage-test/static/js/main.c0afd546.chunk.js.map",
     "runtime-main.js": "/github-action-usage-test/static/js/runtime-main.ca1e5beb.js",
     "runtime-main.js.map": "/github-action-usage-test/static/js/runtime-main.ca1e5beb.js.map",
     "static/js/2.744f0e95.chunk.js": "/github-action-usage-test/static/js/2.744f0e95.chunk.js",
     "static/js/2.744f0e95.chunk.js.map": "/github-action-usage-test/static/js/2.744f0e95.chunk.js.map",
     "index.html": "/github-action-usage-test/index.html",
-    "precache-manifest.fd5072d9cfb4a7b44c6bae437027123a.js": "/github-action-usage-test/precache-manifest.fd5072d9cfb4a7b44c6bae437027123a.js",
+    "precache-manifest.70eba97bd2690f1f480924482390c985.js": "/github-action-usage-test/precache-manifest.70eba97bd2690f1f480924482390c985.js",
     "service-worker.js": "/github-action-usage-test/service-worker.js"
   },
   "entrypoints": [
     "static/js/runtime-main.ca1e5beb.js",
     "static/js/2.744f0e95.chunk.js",
-    "static/js/main.204be008.chunk.js"
+    "static/js/main.c0afd546.chunk.js"
   ]
 }
