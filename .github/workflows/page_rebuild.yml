@@ -1,0 +1,29 @@
+name:
+  Schedule Rebuild Page
+
+on: 
+  schedule:
+    # every hour
+    - cron:  '0 0/1 * * *'
+
+env:
+  HOMEPAGE: https://edwin0cheng.github.io/github-action-usage-test/
+
+jobs:
+  check_basic_valid:
+    name: Check Issue Comment Sha  
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          ref: master
+      - name: Request Rebuild Page
+        env:
+          TOKEN: ${{ secrets.ISSUE_TOKEN }}
+        run: |
+          chmod a+rx ./ci/rebuild_page.sh
+          ./ci/rebuild_page.sh
+
+
+
+          
