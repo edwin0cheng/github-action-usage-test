@@ -1,3 +1,6 @@
+name:
+  Add Commit To gh-pages
+
 on: ["deployment"]
 
 env:
