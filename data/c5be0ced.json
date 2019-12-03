@@ -1,0 +1,95 @@
+[
+    {
+        "crates": 3,
+        "database_loaded_time": "2.668412305s",
+        "declarations": 7097,
+        "error": "fail to parse output",
+        "functions": 2762,
+        "item_collection_time": "10.87017719s",
+        "modules": 213,
+        "project_name": "./rustc-perf/collector/benchmarks/cargo/",
+        "roots": 132
+    },
+    {
+        "crates": 63,
+        "database_loaded_time": "834.833266ms",
+        "declarations": 3545,
+        "error": "fail to parse output",
+        "functions": 1272,
+        "item_collection_time": "6.908241658s",
+        "modules": 115,
+        "project_name": "./rustc-perf/collector/benchmarks/clap-rs/",
+        "roots": 77
+    },
+    {
+        "crates": 21,
+        "database_loaded_time": "3.383818147s",
+        "declarations": 9673,
+        "error": "fail to parse output",
+        "functions": 2991,
+        "item_collection_time": "7.829522086s",
+        "modules": 315,
+        "project_name": "./rustc-perf/collector/benchmarks/cranelift-codegen/",
+        "roots": 132
+    },
+    {
+        "crates": 1,
+        "database_loaded_time": "676.80117ms",
+        "declarations": 1495,
+        "error": "fail to parse output",
+        "functions": 257,
+        "item_collection_time": "2.424436747s",
+        "modules": 55,
+        "project_name": "./rustc-perf/collector/benchmarks/futures/",
+        "roots": 16
+    },
+    {
+        "crates": 1,
+        "database_loaded_time": "67.571827ms",
+        "declarations": 18,
+        "expressions": 5,
+        "functions": 1,
+        "inferenece_time": "2.127546091s",
+        "item_collection_time": "2.23410049s",
+        "modules": 1,
+        "partial_unknown_types": 0,
+        "project_name": "./rustc-perf/collector/benchmarks/helloworld/",
+        "roots": 15,
+        "total_time": "4.361671581s",
+        "type_mismatches": 1,
+        "unknown_types": 0
+    },
+    {
+        "crates": 2,
+        "database_loaded_time": "809.450118ms",
+        "declarations": 845,
+        "error": "fail to parse output",
+        "functions": 255,
+        "item_collection_time": "5.721873933s",
+        "modules": 28,
+        "project_name": "./rustc-perf/collector/benchmarks/html5ever/",
+        "roots": 56
+    },
+    {
+        "crates": 1,
+        "database_loaded_time": "933.942051ms",
+        "declarations": 4097,
+        "error": "fail to parse output",
+        "functions": 819,
+        "item_collection_time": "5.472613465s",
+        "modules": 167,
+        "project_name": "./rustc-perf/collector/benchmarks/hyper/",
+        "roots": 51
+    },
+    {
+        "crates": 9,
+        "database_loaded_time": "1.211134072s",
+        "declarations": 2490,
+        "error": "fail to parse output",
+        "functions": 987,
+        "item_collection_time": "6.240934106s",
+        "modules": 65,
+        "project_name": "./rustc-perf/collector/benchmarks/syn/",
+        "roots": 58
+    }
+]
