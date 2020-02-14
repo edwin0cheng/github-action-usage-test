@@ -4,8 +4,20 @@
         "project_name": "./rustc-perf/collector/benchmarks/cargo/"
     },
     {
-        "error": "fail to parse output",
-        "project_name": "./rustc-perf/collector/benchmarks/clap-rs/"
+        "crates": 63,
+        "database_loaded_time": "1.187559624s",
+        "declarations": 1563,
+        "expressions": 85862,
+        "functions": 1279,
+        "inferenece_time": "19.461731053s",
+        "item_collection_time": "11.204043281s",
+        "modules": 115,
+        "partial_unknown_types": 3089,
+        "project_name": "./rustc-perf/collector/benchmarks/clap-rs/",
+        "roots": 77,
+        "total_time": "30.665784935s",
+        "type_mismatches": 33,
+        "unknown_types": 2647
     },
     {
         "error": "fail to parse output",
@@ -13,46 +25,70 @@
     },
     {
         "crates": 1,
-        "database_loaded_time": "342.198738ms",
+        "database_loaded_time": "337.513373ms",
         "declarations": 504,
         "expressions": 8349,
         "functions": 257,
-        "inferenece_time": "5.135768273s",
-        "item_collection_time": "3.148124226s",
+        "inferenece_time": "4.901399587s",
+        "item_collection_time": "3.151986705s",
         "modules": 55,
         "partial_unknown_types": 1947,
         "project_name": "./rustc-perf/collector/benchmarks/futures/",
         "roots": 16,
-        "total_time": "8.283901999s",
+        "total_time": "8.053405593s",
         "type_mismatches": 97,
         "unknown_types": 860
     },
     {
         "crates": 1,
-        "database_loaded_time": "70.885217ms",
+        "database_loaded_time": "76.539838ms",
         "declarations": 1,
         "expressions": 10,
         "functions": 1,
-        "inferenece_time": "3.619616704s",
-        "item_collection_time": "2.967688734s",
+        "inferenece_time": "3.455594553s",
+        "item_collection_time": "2.878530707s",
         "modules": 1,
         "partial_unknown_types": 0,
         "project_name": "./rustc-perf/collector/benchmarks/helloworld/",
         "roots": 15,
-        "total_time": "6.587314538s",
+        "total_time": "6.33413676s",
         "type_mismatches": 0,
         "unknown_types": 0
     },
     {
-        "error": "fail to parse output",
-        "project_name": "./rustc-perf/collector/benchmarks/html5ever/"
+        "crates": 2,
+        "database_loaded_time": "455.661596ms",
+        "declarations": 348,
+        "expressions": 15097,
+        "functions": 255,
+        "inferenece_time": "10.75428458s",
+        "item_collection_time": "9.335354423s",
+        "modules": 28,
+        "partial_unknown_types": 279,
+        "project_name": "./rustc-perf/collector/benchmarks/html5ever/",
+        "roots": 56,
+        "total_time": "20.089649504s",
+        "type_mismatches": 50,
+        "unknown_types": 334
     },
     {
         "error": "fail to parse output",
         "project_name": "./rustc-perf/collector/benchmarks/hyper/"
     },
     {
-        "error": "fail to parse output",
-        "project_name": "./rustc-perf/collector/benchmarks/syn/"
+        "crates": 9,
+        "database_loaded_time": "961.202843ms",
+        "declarations": 1244,
+        "expressions": 22227,
+        "functions": 995,
+        "inferenece_time": "13.332505993s",
+        "item_collection_time": "10.446003408s",
+        "modules": 65,
+        "partial_unknown_types": 2338,
+        "project_name": "./rustc-perf/collector/benchmarks/syn/",
+        "roots": 58,
+        "total_time": "23.778521701s",
+        "type_mismatches": 28,
+        "unknown_types": 4167
     }
 ]
