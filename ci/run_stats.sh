@@ -7,8 +7,8 @@ fi
 
 # Variables
 
-RA_LSP_SERVER=./ra_lsp_server/ra_lsp_server
-# COMMIT=$(cat ./ra_lsp_server/commit)
+RA_LSP_SERVER=./ra/rust-analyzer
+# COMMIT=$(cat ./ra/commit)
 # OUTPUT_FILE="output-$COMMIT.txt"
 OUTPUT_FILE="ra-stats-output.txt"
 
@@ -34,10 +34,10 @@ is_white_listed () {
 }
 
 run_stats () {
-    echo $(cat ./ra_lsp_server/commit)
-    echo $(cat ./ra_lsp_server/commit_time)
+    echo $(cat ./ra/commit)
+    echo $(cat ./ra/commit_time)
 
-    # Assume ra_lsp_server is in current dir
+    # Assume rust-analyzer is in current dir
     local DIRS=`ls -d ./rustc-perf/collector/benchmarks/*/`
 
     for D in $DIRS

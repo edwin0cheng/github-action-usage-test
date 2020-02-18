@@ -55,19 +55,19 @@ jobs:
           key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('rust-analyzer/**/Cargo.lock') }}
       - name: Generate artifact
         run: |
-          mkdir ra_lsp_server
+          mkdir ra
           cd rust-analyzer          
-          echo $(git rev-parse --short HEAD) > ../ra_lsp_server/commit
-          echo $(git show --no-patch --no-notes --pretty=%ct HEAD) > ../ra_lsp_server/commit_time
+          echo $(git rev-parse --short HEAD) > ../ra/commit
+          echo $(git show --no-patch --no-notes --pretty=%ct HEAD) > ../ra/commit_time
       - name: Run Cargo on RA
         run: |
           cd rust-analyzer
-          cargo build --release -p ra_lsp_server
-          cp ./target/release/ra_lsp_server ../ra_lsp_server/ra_lsp_server
+          cargo build --release -p rust-analyzer
+          cp ./target/release/rust-analyzer ../ra/rust-analyzer
       - name: Run analysis-stats
         run: |
-          ls -R ./ra_lsp_server
-          chmod -R a+rx ./ra_lsp_server
+          ls -R ./ra
+          chmod -R a+rx ./ra
           chmod a+rx ./ci/run_stats.sh
           chmod -R u+rw ./rustc-perf
           ./ci/run_stats.sh
@@ -81,9 +81,9 @@ jobs:
           mkdir -p data
           python ../ci/convert.py ../ra-stats-output.txt ./data/commits.json ./data
           cat ./data/commits.json
-          cat ../ra_lsp_server/commit
+          cat ../ra/commit
           git add .
-          git commit -m "[Bot] Add output $(cat ../ra_lsp_server/commit)"
+          git commit -m "[Bot] Add output $(cat ../ra/commit)"
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
