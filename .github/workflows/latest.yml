@@ -32,7 +32,7 @@ jobs:
           mkdir rust-analyzer
           cd rust-analyzer
           git clone https://github.com/rust-analyzer/rust-analyzer.git .
-          echo $(git rev-parse --short HEAD) > ../target_sha.txt
+          echo $(git rev-parse --short=8 HEAD) > ../target_sha.txt
           python ../ci/issue.py valid ../target_sha.txt ../error.txt
           cd ../gh-pages
           python ../ci/issue.py exists ../target_sha.txt ../error.txt

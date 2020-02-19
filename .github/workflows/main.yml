@@ -57,7 +57,7 @@ jobs:
         run: |
           mkdir ra
           cd rust-analyzer          
-          echo $(git rev-parse --short HEAD) > ../ra/commit
+          echo $(git rev-parse --short=8 HEAD) > ../ra/commit
           echo $(git show --no-patch --no-notes --pretty=%ct HEAD) > ../ra/commit_time
       - name: Run Cargo on RA
         run: |
