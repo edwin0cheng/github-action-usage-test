@@ -22,6 +22,11 @@ import json
 
 def get_next(content):
     line = next(content, None)
+    # skip error
+    if line != None:
+        if line.startswith("[ERROR"):
+            return get_next(content)
+
     # print(line)
     return line
 
