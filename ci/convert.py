@@ -42,9 +42,9 @@ def parse_stat(content):
     assert(get_next(content).startswith("====START"))
     try: 
         m = re.search(
-            r"Database loaded, (\d+) roots, ([+-]?([0-9]*[.])?[0-9]+[m]?s)", get_next(content))
-        stat["roots"] = int(m.group(1))
-        stat["database_loaded_time"] = m.group(2)
+            r"Database loaded ([+-]?([0-9]*[.])?[0-9]+[m]?s)", get_next(content))
+        stat["roots"] = 0
+        stat["database_loaded_time"] = m.group(1)
         stat["crates"] = int(
             re.search(r"Crates in this dir: (.*)", get_next(content)).group(1))
         stat["modules"] = int(
