@@ -1,0 +1,42 @@
+[
+    {
+        "error": "fail to parse output",
+        "project_name": "./rustc-perf/collector/benchmarks/cargo/",
+        "roots": 0
+    },
+    {
+        "error": "fail to parse output",
+        "project_name": "./rustc-perf/collector/benchmarks/clap-rs/",
+        "roots": 0
+    },
+    {
+        "error": "fail to parse output",
+        "project_name": "./rustc-perf/collector/benchmarks/cranelift-codegen/",
+        "roots": 0
+    },
+    {
+        "error": "fail to parse output",
+        "project_name": "./rustc-perf/collector/benchmarks/futures/",
+        "roots": 0
+    },
+    {
+        "error": "fail to parse output",
+        "project_name": "./rustc-perf/collector/benchmarks/helloworld/",
+        "roots": 0
+    },
+    {
+        "error": "fail to parse output",
+        "project_name": "./rustc-perf/collector/benchmarks/html5ever/",
+        "roots": 0
+    },
+    {
+        "error": "fail to parse output",
+        "project_name": "./rustc-perf/collector/benchmarks/hyper/",
+        "roots": 0
+    },
+    {
+        "error": "fail to parse output",
+        "project_name": "./rustc-perf/collector/benchmarks/syn/",
+        "roots": 0
+    }
+]
